@@ -27,7 +27,8 @@ mk-build-deps --install --remove \
   --tool 'apt-get -y --no-install-recommends -o Debug::pkgProblemResolver=yes' \
   debian/control
 
-dch --newversion "$NEW_VERSION" --distribution focal --force-distribution \
+# The focal version sorts below the jammy one, but above the last focal build, so force it.
+dch --newversion "$NEW_VERSION" --force-bad-version --distribution focal --force-distribution \
   "Rebuild of ${JAMMY_VERSION} for Ubuntu 20.04 (includes CVE-2026-109618 and CVE-2026-109619 fixes)."
 
 DEB_BUILD_OPTIONS="nocheck parallel=$(nproc)" dpkg-buildpackage -b -uc -us
