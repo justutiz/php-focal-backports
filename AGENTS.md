@@ -12,7 +12,7 @@ Rebuild ondrej/php jammy (Ubuntu 22.04) source packages for focal (Ubuntu 20.04,
 
 ## Conventions
 
-- The jammy version in the matrix has no epoch, because Launchpad file names omit it. The new version keeps the epoch when the source has one (php7.4 uses `1:`).
+- The jammy version in the matrix has no epoch, because Launchpad file names omit it. The new version keeps the epoch when the source has one (php8.0 and php7.4 use `1:`).
 - New versions use the suffix `+ubuntu20.04.1+backportN`. Increment `N` for every rebuild of the same base version so `dpkg` treats it as an upgrade.
 - To add a newer base version, change `jammy_version` and `new_version` in the matrix and reset the suffix to `+backport1`.
 - Keep the README table in sync with the workflow matrix.

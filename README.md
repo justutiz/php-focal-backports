@@ -1,19 +1,21 @@
 # php-focal-backports
 
-Rebuilds of the [ondrej/php](https://launchpad.net/~ondrej/+archive/ubuntu/php) PHP 8.1 and PHP 7.4 packages for **Ubuntu 20.04 (focal), amd64**.
+Rebuilds of the [ondrej/php](https://launchpad.net/~ondrej/+archive/ubuntu/php) PHP 8.1, 8.0, 7.4 and 5.6 packages for **Ubuntu 20.04 (focal), amd64**.
 
 ## Why
 
-On 2026-10-21 PHP released fixes for two critical remote code execution vulnerabilities, CVE-2026-109618 and CVE-2026-109619 ([advisory](https://www.php.net/archive/2026.php#2026-10-21-5)). The ondrej/php PPA ships patched PHP 8.1 and 7.4 packages, but only for Ubuntu 22.04 and later, because it no longer publishes for Ubuntu 20.04. Servers that still run Ubuntu 20.04 with PHP from that PPA have no patched package available.
+On 2026-10-21 PHP released fixes for two critical remote code execution vulnerabilities, CVE-2026-109618 and CVE-2026-109619 ([advisory](https://www.php.net/archive/2026.php#2026-10-21-5)). The ondrej/php PPA ships patched PHP 8.1, 8.0, 7.4 and 5.6 packages, but only for Ubuntu 22.04 and later, because it no longer publishes for Ubuntu 20.04. Servers that still run Ubuntu 20.04 with PHP from that PPA have no patched package available.
 
 This repository takes the patched Ubuntu 22.04 source packages and rebuilds them on Ubuntu 20.04. The result is a drop-in upgrade for servers that already use the ondrej/php packages on Ubuntu 20.04.
 
 | Source package | Based on (jammy) | Built version |
 |---|---|---|
 | php8.1 | 8.1.34-9 | 8.1.34-9+ubuntu20.04.1+backport1 |
+| php8.0 | 1:8.0.30-25 | 1:8.0.30-25+ubuntu20.04.1+backport1 |
 | php7.4 | 1:7.4.33-31 | 1:7.4.33-31+ubuntu20.04.1+backport1 |
+| php5.6 | 5.6.40-104 | 5.6.40-104+ubuntu20.04.1+backport1 |
 
-Both base versions include the fixes for CVE-2026-109618 and CVE-2026-109619, plus earlier security fixes.
+All base versions include the fixes for CVE-2026-109618 and CVE-2026-109619, plus earlier security fixes.
 
 ## How it works
 
@@ -24,7 +26,7 @@ The GitHub Actions workflow (`.github/workflows/build.yml`) runs on every push t
 3. Sets a new version with a `+backport1` suffix.
 4. Builds the binary packages without running the test suite.
 
-The `.deb` files are published as workflow artifacts (`php8.1-focal-amd64` and `php7.4-focal-amd64`).
+The `.deb` files are published as workflow artifacts named `<source>-focal-amd64` (for example `php8.1-focal-amd64`).
 
 ## Installing on a server
 
