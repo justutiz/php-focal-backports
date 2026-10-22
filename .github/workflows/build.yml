@@ -26,6 +26,9 @@ jobs:
           - source: php7.4
             jammy_version: 7.4.33-31
             new_version: 1:7.4.33-31+ubuntu20.04.1+backport1
+          - source: php7.3
+            jammy_version: 7.3.33-35
+            new_version: 7.3.33-35+ubuntu20.04.1+backport1
           - source: php5.6
             jammy_version: 5.6.40-104
             new_version: 5.6.40-104+ubuntu20.04.1+backport1

@@ -1,10 +1,10 @@
 # php-focal-backports
 
-Rebuilds of the [ondrej/php](https://launchpad.net/~ondrej/+archive/ubuntu/php) PHP 8.1, 8.0, 7.4 and 5.6 packages for **Ubuntu 20.04 (focal), amd64**.
+Rebuilds of the [ondrej/php](https://launchpad.net/~ondrej/+archive/ubuntu/php) PHP 8.1, 8.0, 7.4, 7.3 and 5.6 packages for **Ubuntu 20.04 (focal), amd64**.
 
 ## Why
 
-On 2026-10-21 PHP released fixes for two critical remote code execution vulnerabilities, CVE-2026-109618 and CVE-2026-109619 ([advisory](https://www.php.net/archive/2026.php#2026-10-21-5)). The ondrej/php PPA ships patched PHP 8.1, 8.0, 7.4 and 5.6 packages, but only for Ubuntu 22.04 and later, because it no longer publishes for Ubuntu 20.04. Servers that still run Ubuntu 20.04 with PHP from that PPA have no patched package available.
+On 2026-10-21 PHP released fixes for two critical remote code execution vulnerabilities, CVE-2026-109618 and CVE-2026-109619 ([advisory](https://www.php.net/archive/2026.php#2026-10-21-5)). The ondrej/php PPA ships patched PHP 8.1, 8.0, 7.4, 7.3 and 5.6 packages, but only for Ubuntu 22.04 and later, because it no longer publishes for Ubuntu 20.04. Servers that still run Ubuntu 20.04 with PHP from that PPA have no patched package available.
 
 This repository takes the patched Ubuntu 22.04 source packages and rebuilds them on Ubuntu 20.04. The result is a drop-in upgrade for servers that already use the ondrej/php packages on Ubuntu 20.04.
 
@@ -13,6 +13,7 @@ This repository takes the patched Ubuntu 22.04 source packages and rebuilds them
 | php8.1 | 8.1.34-9 | 8.1.34-9+ubuntu20.04.1+backport1 |
 | php8.0 | 1:8.0.30-25 | 1:8.0.30-25+ubuntu20.04.1+backport1 |
 | php7.4 | 1:7.4.33-31 | 1:7.4.33-31+ubuntu20.04.1+backport1 |
+| php7.3 | 7.3.33-35 | 7.3.33-35+ubuntu20.04.1+backport1 |
 | php5.6 | 5.6.40-104 | 5.6.40-104+ubuntu20.04.1+backport1 |
 
 All base versions include the fixes for CVE-2026-109618 and CVE-2026-109619, plus earlier security fixes.
@@ -30,7 +31,7 @@ The `.deb` files are published as workflow artifacts named `<source>-focal-amd64
 
 ## Installing on a server
 
-These packages only work on **Ubuntu 20.04, amd64**, on servers that already use the ondrej/php PPA.
+These packages only work on **Ubuntu 20.04, amd64**, on servers that already use the ondrej/php PPA. Do not install them over Ubuntu's own `php7.4` packages (versions like `7.4.3-4ubuntu2.x`); those are patched through Ubuntu Pro (ESM).
 
 1. Check the server: `uname -m` must print `x86_64` and `lsb_release -ds` must print Ubuntu 20.04.
 2. List the installed PHP packages: `dpkg -l 'php*' | awk '/^ii/{print $2, $3}'`.
