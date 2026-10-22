@@ -158,7 +158,8 @@ Extensions maintained as separate source packages (`imagick`, `redis`, `memcache
 Everything runs on GitHub Actions ([`build.yml`](.github/workflows/build.yml)), on every push to `main` and on manual dispatch:
 
 1. **Build**: for each PHP version, [`build.sh`](build.sh) runs inside an `ubuntu:20.04` container. It downloads the Ubuntu 22.04 source package from Launchpad, installs the build dependencies from the Ubuntu 20.04 archive, sets the new version with a `+backport1` suffix, and builds the packages with `dpkg-buildpackage` (without the upstream test suite).
-2. **Release**: packs each version into `phpX.Y-focal-amd64.tar.gz` with a `SHA256SUMS` file inside, writes a top-level `SHA256SUMS`, and publishes everything to the release.
+2. **Test**: for each PHP version, [`test.sh`](test.sh) installs the CLI, PHP-FPM and common extensions in a clean `ubuntu:20.04` container, checks the package versions and the loaded extensions, sends a FastCGI request to PHP-FPM, and checks that the changelog lists the CVE fixes. For PHP 7.4, it first installs Ubuntu's own packages and replaces them with the [Quick start](#quick-start) commands. Only versions that pass are released.
+3. **Release**: packs each version into `phpX.Y-focal-amd64.tar.gz` with a `SHA256SUMS` file inside, writes a top-level `SHA256SUMS`, and publishes everything to the release.
 
 The full build log of every release is public in the [Actions](https://github.com/nanoarmando/php-focal-backports/actions) tab.
 

@@ -44,12 +44,48 @@ jobs:
 
       - uses: actions/upload-artifact@v7
         with:
-          name: ${{ matrix.source }}-focal-amd64
+          name: ${{ matrix.source }}-build
           path: out/*.deb
           if-no-files-found: error
 
-  release:
+  test:
     needs: build
+    # Test every version that built, even if another one failed.
+    if: ${{ !cancelled() }}
+    runs-on: ubuntu-latest
+    container: ubuntu:20.04
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - source: php8.1
+          - source: php8.0
+          - source: php7.4
+            # Ubuntu 20.04 ships its own php7.4, so test replacing it.
+            upgrade: upgrade
+          - source: php7.3
+          - source: php5.6
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/download-artifact@v8
+        with:
+          name: ${{ matrix.source }}-build
+          path: debs
+
+      - name: Install and check the packages
+        run: bash test.sh "${{ matrix.source }}" debs "${RELEASE_TAG#focal-}" ${{ matrix.upgrade }}
+
+      # Only tested packages become release artifacts.
+      - uses: actions/upload-artifact@v7
+        with:
+          name: ${{ matrix.source }}-focal-amd64
+          path: debs/*.deb
+          if-no-files-found: error
+
+  release:
+    needs: test
     # Publish whatever versions built successfully, even if another one failed.
     if: ${{ !cancelled() }}
     runs-on: ubuntu-latest
