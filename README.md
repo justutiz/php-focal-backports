@@ -31,7 +31,7 @@ The `.deb` files are published as workflow artifacts named `<source>-focal-amd64
 
 ## Installing on a server
 
-These packages only work on **Ubuntu 20.04, amd64**, on servers that already use the ondrej/php PPA. Do not install them over Ubuntu's own `php7.4` packages (versions like `7.4.3-4ubuntu2.x`); those are patched through Ubuntu Pro (ESM).
+These packages only work on **Ubuntu 20.04, amd64**, on servers that already use the ondrej/php PPA. They can also replace Ubuntu's own `php7.4` packages (versions like `7.4.3-4ubuntu2.x`): the epoch makes `dpkg` treat them as an upgrade, and Ubuntu's `php-common` (`2:75`) satisfies their `php-common (>= 1:81~)` dependency. After that, the server runs PHP 7.4 from these rebuilds and keeps Ubuntu's `php-common` and metapackages.
 
 1. Check the server: `uname -m` must print `x86_64` and `lsb_release -ds` must print Ubuntu 20.04.
 2. List the installed PHP packages: `dpkg -l 'php*' | awk '/^ii/{print $2, $3}'`.
