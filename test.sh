@@ -44,8 +44,10 @@ not_rebuilt=$(dpkg-query -W -f='${db:Status-Abbrev} ${Package} ${Version}\n' "ph
 
 echo "--- Extensions load"
 "php${V}" -v
+# Capture the list once: with pipefail, "php -m | grep -q" fails when grep exits before php stops writing.
+modules=$("php${V}" -m)
 for ext in $EXTENSIONS; do
-  "php${V}" -m | grep -qix "$ext" || { echo "Missing extension: $ext"; exit 1; }
+  grep -qix "$ext" <<< "$modules" || { echo "Missing extension: $ext"; exit 1; }
 done
 
 echo "--- PHP-FPM serves a FastCGI request"

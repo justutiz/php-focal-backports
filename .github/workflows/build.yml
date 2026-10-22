@@ -109,6 +109,10 @@ jobs:
             tar -czf "dist/${name}.tar.gz" -C "$dir" .
           done
           (cd dist && sha256sum *.tar.gz > SHA256SUMS)
+          # Keep the checksums of versions that failed in this run, whose previous archives stay in the release.
+          if gh release download "$RELEASE_TAG" --pattern SHA256SUMS --output previous.sums 2> /dev/null; then
+            grep -vFf <(cd dist && ls *.tar.gz) previous.sums >> dist/SHA256SUMS || true
+          fi
 
           if ! gh release view "$RELEASE_TAG" > /dev/null 2>&1; then
             gh release create "$RELEASE_TAG" \

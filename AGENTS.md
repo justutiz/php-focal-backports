@@ -11,7 +11,7 @@ Rebuild ondrej/php Ubuntu 22.04 (jammy) PHP source packages for Ubuntu 20.04 (fo
 - `.github/workflows/build.yml`:
   - `build` job: one matrix entry per PHP version, runs `build.sh` inside `ubuntu:20.04`, uploads `out/*.deb` as the `<source>-build` artifact.
   - `test` job: one matrix entry per PHP version (php7.4 with `upgrade`), runs `test.sh` inside `ubuntu:20.04`, and re-uploads the tested packages as the `<source>-focal-amd64` artifact. Only tested versions reach the release.
-  - `release` job: runs after `test` unless the run was cancelled, packs each artifact into `<source>-focal-amd64.tar.gz` with a `SHA256SUMS` inside, writes a top-level `SHA256SUMS`, and creates or updates the release `$RELEASE_TAG` (assets replaced with `--clobber`).
+  - `release` job: runs after `test` unless the run was cancelled, packs each artifact into `<source>-focal-amd64.tar.gz` with a `SHA256SUMS` inside, writes a top-level `SHA256SUMS` (keeping the previous lines of versions not published in this run), and creates or updates the release `$RELEASE_TAG` (assets replaced with `--clobber`).
 - `README.md`: public documentation: versions, included packages, download, installation, rollback, limitations.
 
 ## Conventions
