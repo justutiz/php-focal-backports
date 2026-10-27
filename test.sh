@@ -5,6 +5,7 @@
 # Example: test.sh php7.4 debs backport1 upgrade
 set -euo pipefail
 
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 SOURCE="$1"
 DEB_DIR="$(realpath "$2")"
 SUFFIX="$3"
@@ -62,7 +63,6 @@ grep -q "fpm ok" <<< "$response"
 
 echo "--- The upstream changelog lists the fixes"
 # The Ubuntu image does not install /usr/share/doc, so read it from the package.
-# The bracketed form only appears in the upstream entry, not in the one added by build.sh.
 dpkg-deb --fsys-tarfile "$DEB_DIR/php${V}-common"_*.deb \
   | tar -xO "./usr/share/doc/php${V}-common/changelog.Debian.gz" \
-  | gunzip | grep -F '[CVE-2026-109618, CVE-2026-109619]'
+  | gunzip | bash "$SCRIPT_DIR/check-changelog.sh"

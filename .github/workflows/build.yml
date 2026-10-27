@@ -21,6 +21,9 @@ jobs:
       fail-fast: false
       matrix:
         include:
+          - source: php8.3
+            jammy_version: 8.3.36-1
+            new_version: 8.3.36-1+ubuntu20.04.1+backport1
           - source: php8.1
             jammy_version: 8.1.34-9
             new_version: 8.1.34-9+ubuntu20.04.1+backport1
@@ -38,6 +41,9 @@ jobs:
             new_version: 5.6.40-104+ubuntu20.04.1+backport1
     steps:
       - uses: actions/checkout@v7
+
+      - name: Check security changelog formats
+        run: bash tests/check-changelog.sh
 
       - name: Build packages
         run: bash build.sh "${{ matrix.source }}" "${{ matrix.jammy_version }}" "${{ matrix.new_version }}"
@@ -59,6 +65,7 @@ jobs:
       fail-fast: false
       matrix:
         include:
+          - source: php8.3
           - source: php8.1
           - source: php8.0
           - source: php7.4

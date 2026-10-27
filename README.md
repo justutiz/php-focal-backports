@@ -8,7 +8,7 @@
 [![Release](https://img.shields.io/github/v/release/nanoarmando/php-focal-backports?label=release)](https://github.com/nanoarmando/php-focal-backports/releases/latest)
 ![Ubuntu 20.04](https://img.shields.io/badge/Ubuntu-20.04%20focal-E95420?logo=ubuntu&logoColor=white)
 ![amd64](https://img.shields.io/badge/arch-amd64-informational)
-![PHP](https://img.shields.io/badge/PHP-5.6%20%7C%207.3%20%7C%207.4%20%7C%208.0%20%7C%208.1-777BB4?logo=php&logoColor=white)
+![PHP](https://img.shields.io/badge/PHP-5.6%20%7C%207.3%20%7C%207.4%20%7C%208.0%20%7C%208.1%20%7C%208.3-777BB4?logo=php&logoColor=white)
 
 </div>
 
@@ -35,6 +35,7 @@ This repository takes the patched Ubuntu 22.04 source packages from the PPA and 
 
 | PHP | Package version | Based on |
 |:---:|---|---|
+| **8.3** | `8.3.36-1+ubuntu20.04.1+backport1` | `8.3.36-1` |
 | **8.1** | `8.1.34-9+ubuntu20.04.1+backport1` | `8.1.34-9` |
 | **8.0** | `1:8.0.30-25+ubuntu20.04.1+backport1` | `1:8.0.30-25` |
 | **7.4** | `1:7.4.33-31+ubuntu20.04.1+backport1` | `1:7.4.33-31` |
@@ -42,6 +43,8 @@ This repository takes the patched Ubuntu 22.04 source packages from the PPA and 
 | **5.6** | `5.6.40-104+ubuntu20.04.1+backport1` | `5.6.40-104` |
 
 "Based on" is the ondrej/php source package for Ubuntu 22.04.
+
+For PHP 8.3, use `V=8.3` in the commands below and download `php8.3-focal-amd64.tar.gz`. This upgrades PHP 8.3 within the same branch; it does not change which PHP version a site or CLI uses. Verify that the release contains the archive before starting. PHP 8.2 is not included.
 
 ## Quick start
 
@@ -144,12 +147,12 @@ Each archive contains the same binary packages that the ondrej/php PPA builds fr
 
 **Extensions only in some versions**
 
-| Extension | 8.1 | 8.0 | 7.4 | 7.3 | 5.6 |
-|---|:---:|:---:|:---:|:---:|:---:|
-| `json` | built-in | built-in | ✓ | ✓ | ✓ |
-| `xmlrpc` | | | ✓ | ✓ | ✓ |
-| `recode` | | | | ✓ | ✓ |
-| `mcrypt` | | | | | ✓ |
+| Extension | 8.3 | 8.1 | 8.0 | 7.4 | 7.3 | 5.6 |
+|---|:---:|:---:|:---:|:---:|:---:|:---:|
+| `json` | built-in | built-in | built-in | ✓ | ✓ | ✓ |
+| `xmlrpc` | | | | ✓ | ✓ | ✓ |
+| `recode` | | | | | ✓ | ✓ |
+| `mcrypt` | | | | | | ✓ |
 
 Extensions maintained as separate source packages (`imagick`, `redis`, `memcached`, `xdebug`, `mongodb`, and others) are **not** included.
 
